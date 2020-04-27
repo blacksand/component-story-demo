@@ -444,7 +444,7 @@ nx g c layout/app-footer --project ui-bulma
 
 > 因为没有配置图标字库, 切换按钮暂时使用文本 `<=>` 代替.
 
-#### 配置 storybook 插件
+#### 配置 storybook 插件 [step-8](#step-8)
 
 现在能看到 bulma 风格的顶部导航条了, 在进一步操作前, 我们需要对 stroybook 进行配置, 让它能提供诸如
 切换手机/平板视图, 修改输入参数, 查看输出事件等功能。 打开 `.storybook/addons.js`, 替换内容如下:
@@ -544,10 +544,34 @@ configure(
 
 完成后, 刷新 storybook 页面, 可以看见多了一些内容.
 
-#### 修改 layout 组件
+#### 重新修改 app-header 的用户故事 [step-9](#step-9)
 
-打开 `libs/ui/bulma/src/lib/layout/sidenav-layout/sidenav-layout.component.html` 文件, 替换为以下内容:
+在 `app-header.stories.ts` 中, 添加下面的代码:
 
-```html
+```ts
+import { text, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
+export const mobile = () => ({
+  component: AppHeaderComponent,
+  props: {
+    header: text('header', 'Elane'),
+    onToggle: action('toggleSidenav')
+  }
+});
+
+mobile.story = {
+  name: '手机布局',
+  parameters: { viewport: { defaultViewport: 'mobile1' } }
+};
 ```
+
+保存文件, 查看 app-header/手机布局 页面, 发现多了一个滚动条, 在 `styles.scss` 中添加下面的语句关闭它:
+
+```scss
+html {
+  overflow: hidden;
+}
+```
+
+#### 修改 layout 组件
