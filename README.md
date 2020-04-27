@@ -257,9 +257,9 @@ storybook 通过编写 **用户故事** (敏捷开发) 的方式对组件开发�
 - 为测试工作搭建了良好的平台, 可与其他工具配合进行自动化测试
 - 集中了组件的示例演示, 文档, 测试于一体, 为开发团队, 运营实施, 以及最终用户提供了一个交流平台
 
-## 进行组件开发 [step-3](#step-3)
+## 进行组件开发
 
-### 创建组件
+### 创建组件 [step-3](#step-3)
 
 在开始编写组件代码之前, 我们需要在工作空间中创建一个组件库, 将来这个库可以被单独打包, 并做为 npm
 库进行发布, 从而实现项目库级别的重用。
@@ -310,16 +310,34 @@ elane
                └── ui-bulma.module.ts
 ```
 
-### 编写故事
+### 准备 storybook [step-4](#step-4)
 
-首先, 我们需要为 `ui-bulma` 库启用 storybook 功能, 运行下面的命令:
+首先, 我们需要为 `ui-bulma` 库启用 storybook 功能, 运行下面的命令,
+对提示的问题全部选择默认的 'Yes'
 
 ```bash
 nx g storybook-configuration ui-bulma
 ```
 
+> 默认设置中, storybook 服务使用本机 `4400` 端口, wsl2 环境中经常出现该端口被占用不能启动服务的情况, 所以在
+> vscode 中全局查找 `4400`, 修改为 `24400`, 共有两个文件需要修改, 分别是 `angular.json` 和 `cypress.json`。
+
 然后, 我们需要启动 storybook 服务, 运行下面的命令:
 
 ```bash
 nx run ui-bulma:storybook
+# 运行成功后出现:
+╭─────────────────────────────────────────────────────╮
+│                                                     │
+│   Storybook 5.3.9 started                           │
+│   12 s for manager and 14 s for preview             │
+│                                                     │
+│    Local:            http://localhost:24400/        │
+│    On your network:  http://172.31.246.90:24400/    │
+│                                                     │
+╰─────────────────────────────────────────────────────╯
 ```
+
+现在, 在浏览器中打开 `http://localhost:24400/` 即可查看 storybook 了
+
+### 编写故事 [step-5](#step-5)

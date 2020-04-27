@@ -25,7 +25,9 @@
               "apps/dashboard/src/favicon.ico",
               "apps/dashboard/src/assets"
             ],
-            "styles": ["apps/dashboard/src/styles.scss"],
+            "styles": [
+              "apps/dashboard/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -83,7 +85,10 @@
               "apps/dashboard/tsconfig.app.json",
               "apps/dashboard/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/dashboard/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/dashboard/**"
+            ]
           }
         },
         "test": {
@@ -118,8 +123,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/dashboard-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/dashboard-e2e/**"]
+            "tsConfig": [
+              "apps/dashboard-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/dashboard-e2e/**"
+            ]
           }
         }
       }
@@ -137,7 +147,10 @@
               "libs/ui/bulma/tsconfig.lib.json",
               "libs/ui/bulma/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/ui/bulma/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/ui/bulma/**"
+            ]
           }
         },
         "test": {
@@ -148,11 +161,73 @@
             "passWithNoTests": true,
             "setupFile": "libs/ui/bulma/src/test-setup.ts"
           }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 24400,
+            "config": {
+              "configFolder": "libs/ui/bulma/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/ui-bulma",
+            "config": {
+              "configFolder": "libs/ui/bulma/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
         }
       },
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
+        }
+      }
+    },
+    "ui-bulma-e2e": {
+      "root": "apps/ui-bulma-e2e",
+      "sourceRoot": "apps/ui-bulma-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ui-bulma-e2e/cypress.json",
+            "tsConfig": "apps/ui-bulma-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ui-bulma:storybook"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "ui-bulma:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ui-bulma-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/ui-bulma-e2e/**"
+            ]
+          }
         }
       }
     }
