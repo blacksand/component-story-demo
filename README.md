@@ -445,8 +445,104 @@ nx g c layout/app-footer --project ui-bulma
 > 因为没有配置图标字库, 切换按钮暂时使用文本 `<=>` 代替.
 
 #### 配置 storybook 插件
+
 现在能看到 bulma 风格的顶部导航条了, 在进一步操作前, 我们需要对 stroybook 进行配置, 让它能提供诸如
-切换手机/平板视图, 修改输入参数, 查看输出事件等功能。
+切换手机/平板视图, 修改输入参数, 查看输出事件等功能。 打开 `.storybook/addons.js`, 替换内容如下:
+
+```js
+import '@storybook/addon-actions/register';
+import '@storybook/addon-backgrounds/register';
+import '@storybook/addon-docs/register';
+import '@storybook/addon-knobs/register';
+import '@storybook/addon-storysource/register';
+import '@storybook/addon-viewport/register';
+```
+
+替换 `.storybook/webpack.config.js`:
+
+```js
+const createCompiler = require('@storybook/addon-docs/mdx-compiler-plugin');
+
+// Export a function. Accept the base config as the only param.
+module.exports = async ({ config, mode }) => {
+  // `mode` has a value of 'DEVELOPMENT' or 'PRODUCTION'
+  // You can change the configuration based on that.
+  // 'PRODUCTION' is used when building the static version of storybook.
+
+  // Make whatever fine-grained changes you need
+
+  // Return the altered config
+  config.module.rules.push({
+    // 2a. Load `.stories.mdx` / `.story.mdx` files as CSF and generate
+    //     the docs page from the markdown
+    test: /\.(stories|story)\.mdx$/,
+    use: [
+      {
+        loader: 'babel-loader',
+        // may or may not need this line depending on your app's setup
+        options: {
+          plugins: ['@babel/plugin-transform-react-jsx']
+        }
+      },
+      {
+        loader: '@mdx-js/loader',
+        options: {
+          compilers: [createCompiler({})]
+        }
+      }
+    ]
+  });
+  // 2b. Run `source-loader` on story files to show their source code
+  //     automatically in `DocsPage` or the `Source` doc block.
+  config.module.rules.push({
+    test: /\.(stories|story)\.[tj]sx?$/,
+    loader: require.resolve('@storybook/source-loader'),
+    exclude: [/node_modules/],
+    enforce: 'pre'
+  });
+
+  return config;
+};
+```
+
+最后是 `libs/ui/bulma/.storybook/config.js`:
+
+```js
+import { configure, addDecorator, addParameters } from '@storybook/angular';
+import { DocsContainer, DocsPage } from '@storybook/addon-docs/blocks';
+import { withKnobs } from '@storybook/addon-knobs';
+
+addParameters({
+  docs: {
+    iframeHeight: '60px',
+    page: DocsPage,
+    container: DocsContainer
+  },
+  backgrounds: [
+    { name: 'twitter', value: '#00aced', default: true },
+    { name: 'facebook', value: '#3b5998' },
+    { name: 'grey', value: '#c5c5c5' }
+  ],
+  options: {
+    sortStoriesByKind: true,
+    storySort: (a, b) => {
+      console.log(a, b);
+      return a[1].kind === b[1].kind
+        ? 0
+        : a[1].id.localeCompare(b[1].id, undefined, { numeric: true });
+    }
+  }
+});
+
+addDecorator(withKnobs);
+
+configure(
+  require.context('../src/lib', true, /\.stories\.(ts|tsx|mdx)$/),
+  module
+);
+```
+
+完成后, 刷新 storybook 页面, 可以看见多了一些内容.
 
 #### 修改 layout 组件
 
