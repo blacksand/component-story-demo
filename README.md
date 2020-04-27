@@ -394,3 +394,81 @@ desktop.story = {
 
 这个故事就是我们用来编写和调试 Layout 组件在桌面浏览器中显示效果的开发环境, 之后我们还要创建用于手机和平板浏览器
 环境下的用户故事。
+
+### 编写组件 [step-6](#step-6)
+
+我们的 sidenav-layout 布局是应用的主界面, 它将页面划分为四个区域, 分别是: 页头, 页脚, 导航树, 内容区。
+
+```js
+-------------------------------------
+|  (1)                              | 1: 页头
+-------------------------------------
+|         |                         |
+|  (2)    |  (3)                    | 2: 导航树
+|         |                         | 3: 内容区
+|         |                         |
+-------------------------------------
+|  (4)                              | 4: 页脚
+-------------------------------------
+```
+
+对 layout 组件的基本需求如下:
+
+- 页头中需要显示 app 名称, 名称是由后端或配置文件中读取的
+- 点击页头中的切换按钮, 可以切换导航树的显示
+- 内容区中是路由插槽
+- 当内容区不满一屏时, 页脚显示在视图底部, 内容超过一屏时, 页脚显示在内容之后
+- 能够在手机 / 平板 / 桌面网站中自适应显示
+
+下一步, 我们针对这四个区域分别创建相关的组件:
+
+```bash
+nx g c layout/app-header --project ui-bulma
+nx g c layout/app-sidenav --project ui-bulma
+nx g c layout/page-container --project ui-bulma
+nx g c layout/app-footer --project ui-bulma
+```
+
+#### 编辑 header 组件
+
+现在, 可以开始编写 app-header 的故事和代码了。首先, 新建文件
+`libs/ui/bulma/src/lib/layout/app-header/app-header.stories.ts`, 内容为:
+
+```ts
+import { moduleMetadata } from '@storybook/angular';
+import { AppHeaderComponent } from './app-header.component';
+import { CommonModule } from '@angular/common';
+
+export default {
+  title: 'ui-bulma|layout/app-header',
+  component: AppHeaderComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [CommonModule],
+      declarations: [AppHeaderComponent]
+    })
+  ]
+};
+
+export const primary = () => ({
+  component: AppHeaderComponent,
+  props: {}
+});
+
+export const desktop = () => ({
+  component: AppHeaderComponent,
+  props: {}
+});
+
+desktop.story = {
+  name: '桌面布局'
+};
+```
+
+#### 修改 layout 组件
+
+打开 `libs/ui/bulma/src/lib/layout/sidenav-layout/sidenav-layout.component.html` 文件, 替换为以下内容:
+
+```html
+
+```
