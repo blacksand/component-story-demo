@@ -1,1 +1,27 @@
-<p>app-header works!</p>
+<nav
+  class="navbar"
+  [ngClass]="className"
+  role="navigation"
+  aria-label="main navigation"
+>
+  <div class="navbar-brand">
+    <a class="navbar-item is-toggle" role="button" (click)="onToggle($event)">
+      <=>
+    </a>
+
+    <a class="navbar-item is-title">
+      <span class="is-size-4 has-text-weight-bold">{{ header }}</span>
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>

@@ -431,39 +431,22 @@ nx g c layout/app-footer --project ui-bulma
 
 #### 编辑 header 组件
 
-现在, 可以开始编写 app-header 的故事和代码了。首先, 新建文件
-`libs/ui/bulma/src/lib/layout/app-header/app-header.stories.ts`, 内容为:
+组件中需要用到 `bulma` 的样式库, 所以要添加对 bulma 的引用:
 
-```ts
-import { moduleMetadata } from '@storybook/angular';
-import { AppHeaderComponent } from './app-header.component';
-import { CommonModule } from '@angular/common';
-
-export default {
-  title: 'ui-bulma|layout/app-header',
-  component: AppHeaderComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [CommonModule],
-      declarations: [AppHeaderComponent]
-    })
-  ]
-};
-
-export const primary = () => ({
-  component: AppHeaderComponent,
-  props: {}
-});
-
-export const desktop = () => ({
-  component: AppHeaderComponent,
-  props: {}
-});
-
-desktop.story = {
-  name: '桌面布局'
-};
+```scss
+// apps/dashboard/src/styles.scss
+@import '~bulma/bulma';
 ```
+
+现在, 可以开始编写 app-header 的故事和组件代码了。
+
+相关的代码在 git 的 `step-7` tag 中, 使用 `git checkout step-7` 签出查看.
+
+> 因为没有配置图标字库, 切换按钮暂时使用文本 `<=>` 代替.
+
+#### 配置 storybook 插件
+现在能看到 bulma 风格的顶部导航条了, 在进一步操作前, 我们需要对 stroybook 进行配置, 让它能提供诸如
+切换手机/平板视图, 修改输入参数, 查看输出事件等功能。
 
 #### 修改 layout 组件
 
