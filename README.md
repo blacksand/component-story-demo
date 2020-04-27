@@ -338,6 +338,59 @@ nx run ui-bulma:storybook
 ╰─────────────────────────────────────────────────────╯
 ```
 
-现在, 在浏览器中打开 `http://localhost:24400/` 即可查看 storybook 了
+现在, 在浏览器中打开 `http://localhost:24400/` 即可查看 storybook 了, 一切顺利的话,
+在左侧的导航菜单中, 能看见两个组件的故事列表, 点击 `SidenavLayoutComponent` 里面的 `Primary`,
+在右侧主界面中, 就会出现之前创建的 SidenavLayout 组件, 因为尚未对它编码, 所以它显示初始的
+`sidenav-layout works!` 字符。
+
+> 在浏览器中查看调试程序时, 尽量使用 **无痕模式** 或 **隐身模式**, 可以减少额外的干扰
 
 ### 编写故事 [step-5](#step-5)
+
+保持上一个步骤中打开的浏览器, 然后启动编辑器, 对这个故事进行修改, 打开文件:
+`libs/ui/bulma/src/lib/layout/sidenav-layout/sidenav-layout.component.stories.ts`,
+替换其中的内容为:
+
+```ts
+import { moduleMetadata } from '@storybook/angular';
+import { SidenavLayoutComponent } from './sidenav-layout.component';
+import { CommonModule } from '@angular/common';
+
+export default {
+  title: 'ui-bulma|layout/sidenave-layout',
+  component: SidenavLayoutComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [CommonModule],
+      declarations: [SidenavLayoutComponent]
+    })
+  ]
+};
+
+export const primary = () => ({
+  component: SidenavLayoutComponent,
+  props: {}
+});
+```
+
+storybook 通过 `default export` 的对象中的 `title` 属性进行导航树的管理, 观察一下我们设置的故事书
+标题 `ui-bulma|layout/sidenave-layout` 是如何转换为导航树目录层级的。
+
+在故事书文件中, 除了默认导出 `export default` 之外的所有带有名称的导出对象, 都会被识别为一个用户故事,
+所以, 我们现在有一个名为 `primary` 的故事了, 保留它不变, 在文件末尾添加一个新的故事:
+
+```ts
+export const desktop = () => ({
+  component: SidenavLayoutComponent,
+  props: {}
+});
+
+desktop.story = {
+  name: '桌面布局'
+};
+```
+
+添加完后, 保存文件, 浏览器中的用户故事应该会自动刷新, 一个新的 `桌面布局` 的故事会出现在导航树中, 点击它。
+
+这个故事就是我们用来编写和调试 Layout 组件在桌面浏览器中显示效果的开发环境, 之后我们还要创建用于手机和平板浏览器
+环境下的用户故事。

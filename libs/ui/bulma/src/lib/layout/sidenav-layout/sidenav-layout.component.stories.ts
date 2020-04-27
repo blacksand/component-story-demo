@@ -1,15 +1,28 @@
-
+import { moduleMetadata } from '@storybook/angular';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
+import { CommonModule } from '@angular/common';
 
 export default {
-  title: 'SidenavLayoutComponent'
-}
+  title: 'ui-bulma|layout/sidenave-layout',
+  component: SidenavLayoutComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [CommonModule],
+      declarations: [SidenavLayoutComponent]
+    })
+  ]
+};
 
 export const primary = () => ({
-  moduleMetadata: {
-    imports: []
-  },
   component: SidenavLayoutComponent,
-  props: {
-  }
-})
+  props: {}
+});
+
+export const desktop = () => ({
+  component: SidenavLayoutComponent,
+  props: {}
+});
+
+desktop.story = {
+  name: '桌面布局'
+};
