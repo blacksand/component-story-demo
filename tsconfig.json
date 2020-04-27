@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@elane/ui/bulma": ["libs/ui/bulma/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

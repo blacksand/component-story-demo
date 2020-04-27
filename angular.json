@@ -123,6 +123,38 @@
           }
         }
       }
+    },
+    "ui-bulma": {
+      "projectType": "library",
+      "root": "libs/ui/bulma",
+      "sourceRoot": "libs/ui/bulma/src",
+      "prefix": "elane",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ui/bulma/tsconfig.lib.json",
+              "libs/ui/bulma/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ui/bulma/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui/bulma/jest.config.js",
+            "tsConfig": "libs/ui/bulma/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ui/bulma/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {
