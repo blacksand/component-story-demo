@@ -42,7 +42,7 @@
 
 ### 组件的分类:
 
-> 这个概念来自 `react` 社区
+> 这个概念来自 `react` 社区, 对于 angular 和 vue 来说, 约束性会小一些
 
 - 展示组件  
   也称为 UI 组件, 哑组件, 负责将输入的数据呈现到 html 中
@@ -139,9 +139,10 @@ export CYPRESS_INSTALL_BINARY=~/download/cypress.zip
 
 等待一段时间, 依赖包下载安装完成后, 工作空间就可以使用了。
 
-接下来, 运行一下测试程序, 以确保所有依赖包都安装正确:
-
+> 通过运行 `nx update` 检测是否有需要进行 angular 包的升级  
 > 如果在全局环境中安装了 @nrwl/cli, 则可以直接使用 `nx` 命令, 否则需要用 `yarn nx`
+
+接下来, 运行一下测试程序, 以确保所有依赖包都安装正确:
 
 ### 使用 jest 进行单元测试
 
@@ -241,3 +242,17 @@ yarn add -D @nrwl/storybook               \
             @storybook/addon-storysource  \
             @storybook/addon-viewport
 ```
+
+### storybook 介绍
+
+> Storybook is an open source tool for developing UI components in isolation for React, Vue, and Angular.
+> It makes building stunning UIs organized and efficient.
+>
+> Storybook 是一个开源工具，用于为 React，Vue 和 Angular 隔离开发 UI 组件。
+> 它使构建令人惊叹的 UI 井井有条且高效。
+
+storybook 通过编写 **用户故事** (敏捷开发) 的方式对组件开发过程进行管理
+
+- 提供了一个隔离的开发环境, 用于快速开发 UI 组件
+- 为测试工作搭建了良好的平台, 可与其他工具配合进行自动化测试
+- 集中了组件的示例演示, 文档, 测试于一体, 为开发团队, 运营实施, 以及最终用户提供了一个交流平台
