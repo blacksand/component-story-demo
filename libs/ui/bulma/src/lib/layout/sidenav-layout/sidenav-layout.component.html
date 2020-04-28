@@ -1,10 +1,19 @@
-<!--
-<elane-app-header></elane-app-header>
+<elane-app-header
+  class="app-header"
+  [title]="title"
+  (toggle)="onToggleSidenav($event)"
+>
+</elane-app-header>
 
-<div class="app-container">
-  <elane-app-sidenav></elane-app-sidenav>
-  <elane-page-container></elane-page-container>
+<div class="app-content">
+  <elane-app-sidenav class="app-sidenav" [open]="isSidenavOpen">
+  </elane-app-sidenav>
+
+  <elane-page-container class="page-container">
+    <!-- <router-outlet></router-outlet> -->
+  </elane-page-container>
 </div>
 
-<elane-app-footer></elane-app-footer>
--->
+<elane-app-footer class="app-footer">
+  app-footer
+</elane-app-footer>

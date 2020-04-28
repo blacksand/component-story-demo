@@ -615,7 +615,7 @@ longTitle.story = {
 };
 ```
 
-> 上面的代码中, 我们重复了 'Elane' 字符串10次生成一个长字符串, 然后通过 knobs 插件把它传递给组件的输入参数.
+> 上面的代码中, 我们重复了 'Elane' 字符串 10 次生成一个长字符串, 然后通过 knobs 插件把它传递给组件的输入参数.
 
 #### 对 app-sidenav 组件编码 [step-11](#step-11)
 
@@ -624,5 +624,20 @@ longTitle.story = {
 app-sidenav 组件接收一个 `open` 参数, 值为真时, 显示边栏, 否则隐藏它, 代码中使用了简单的 css 迁移动画.
 
 在 Knobs 中变更 `open` 参数, 查看边栏能否正确切换.
+
+> 手机布局的效果暂未实现
+
+#### 组合 app-header 和 app-sidenav [step-12](#step-12)
+
+现在, 我们有 app-header 组件的 `toggel` 输出事件, 它在用户点击 '切换' 按钮时触发,
+还有 app-sidenav 接收输入 `open` 参数, 指示是否显示边栏组件, 我们在这两个组件的父组件 `sidenav-layout`
+中把它们装配起来.
+
+检查事件是如何在这三个组件之间传递的:
+1. 用户点击 `<=>` 按钮
+2. header 组件弹出 `toggle` 事件
+3. layout 组件监听到这个事件时, 修改了自己的 `isSidenavOpen` 属性
+4. layout 的 `isSidenavOpen` 属性是 sidenav 子组件的输入参数
+5. sidenav 检测到输入参数变更, 会调整内部 dom 元素的显示外观
 
 > 手机布局的效果暂未实现

@@ -1,0 +1,42 @@
+@import '~bulma/sass/utilities/_all';
+$border: solid 1px blue;
+
+:host {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  background-color: #ccc;
+}
+
+.app-footer,
+.app-header,
+.app-sidenav,
+.page-container {
+  border: $border;
+}
+
+.app-footer,
+.app-header {
+  height: 56px;
+}
+
+.app-content {
+  display: flex;
+  flex: 1 1 100%;
+}
+
+// .app-sidenav {
+//   width: 280px;
+// }
+
+.page-container {
+  flex: 1;
+}
+
+@include until($tablet) {
+  .app-sidenav:not(.active) {
+    display: none;
+  }
+}

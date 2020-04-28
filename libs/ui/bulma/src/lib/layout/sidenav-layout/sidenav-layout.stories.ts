@@ -1,14 +1,13 @@
 import { moduleMetadata } from '@storybook/angular';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
-import { CommonModule } from '@angular/common';
+import { LayoutModule } from '../layout.module';
 
 export default {
   title: 'ui-bulma|layout/sidenave-layout',
   component: SidenavLayoutComponent,
   decorators: [
     moduleMetadata({
-      imports: [CommonModule],
-      declarations: [SidenavLayoutComponent]
+      imports: [LayoutModule]
     })
   ]
 };
@@ -18,11 +17,16 @@ export const primary = () => ({
   props: {}
 });
 
-export const desktop = () => ({
+export const mobile = () => ({
   component: SidenavLayoutComponent,
   props: {}
 });
 
-desktop.story = {
-  name: '桌面布局'
+mobile.story = {
+  name: '手机布局',
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile1'
+    }
+  }
 };
