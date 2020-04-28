@@ -7,7 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class AppHeaderComponent {
   @Input()
-  header = 'ELANE';
+  title = 'ELANE';
 
   @Input()
   color?: 'info' | 'success' | 'primary' | 'warning' | 'danger';

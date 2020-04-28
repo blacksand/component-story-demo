@@ -574,4 +574,45 @@ html {
 }
 ```
 
-#### 修改 layout 组件
+现在, 点击组件中的 `<=>` 按钮, 应该能在 storybook 页面中的 `Actions` 页签看见组件的输出事件,
+然后切换到 `Knobs` 页签, 这里可以调整组件的输入参数, 试一下。
+
+#### 调试 app-header [step-10](#step-10)
+
+测试中, 发现了两个存在的问题:
+
+1. header 中的文字可以被鼠标选中, 这不是我们希望的
+2. 当标题中的文字内容过长时, 文本会溢出到屏幕外部, 导致右边的菜单切换按钮不能显示
+
+下面, 修复这两个问题.
+
+通过在 app-header 组件中调用 bulma 的 `unselectable` 混合类, 让整个组件的文本变为不可选中,
+通过指定宽度和 `text-overflow` 等属性, 让组件能截断过长的文本.
+
+问题解决了, 我们应该为这个问题写一个新的用户故事, 作为回归测试用例, 避免将来这个问题再次出现.
+在 `app-header.stories.ts` 中添加新故事, 然后查看它的效果:
+
+```ts
+const longText = Array.from(new Array(10))
+  .map(() => 'Elane')
+  .join('');
+
+export const longTitle = () => ({
+  component: AppHeaderComponent,
+  props: {
+    title: text('title', longText),
+    onToggle: action('toggleSidenav')
+  }
+});
+
+longTitle.story = {
+  name: '长标题能被截断',
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile1'
+    }
+  }
+};
+```
+
+> 上面的代码中, 我们重复了 'Elane' 字符串10次生成一个长字符串, 然后通过 knobs 插件把它传递给组件的输入参数.

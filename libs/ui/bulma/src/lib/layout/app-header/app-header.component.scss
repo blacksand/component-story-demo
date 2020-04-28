@@ -1,0 +1,36 @@
+@import '~bulma/sass/utilities/_all';
+
+:host {
+  display: block;
+  height: 64px;
+  z-index: 4;
+  @include unselectable;
+}
+
+.navbar-brand {
+  width: 100%;
+}
+
+.navbar-item.is-toggle {
+  flex: 0 0 64px;
+}
+
+.navbar-item.is-title {
+  flex: 1;
+  overflow: hidden;
+  span {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+  }
+}
+
+.navbar-burger {
+  flex-shrink: 0;
+}
+
+@include until($tablet) {
+  :host {
+    height: 54px;
+  }
+}
