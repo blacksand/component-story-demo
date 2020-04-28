@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'elane-app-sidenav',
   templateUrl: './app-sidenav.component.html',
   styleUrls: ['./app-sidenav.component.scss']
 })
-export class AppSidenavComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class AppSidenavComponent {
+  @Input()
+  @HostBinding('class.is-open')
+  open = true;
 }
